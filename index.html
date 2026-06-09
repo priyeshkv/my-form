@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form</title>
+</head>
+<body>
+
+<h2>Contact Form</h2>
+
+<form id="contactForm">
+
+  <input
+    type="text"
+    id="name"
+    placeholder="Name"
+    required
+  ><br><br>
+
+  <input
+    type="email"
+    id="email"
+    placeholder="Email"
+    required
+  ><br><br>
+
+  <input
+    type="text"
+    id="phone"
+    placeholder="Phone"
+  ><br><br>
+
+  <textarea
+    id="message"
+    placeholder="Message"
+  ></textarea>
+
+  <br><br>
+
+  <button type="submit">
+    Submit
+  </button>
+
+</form>
+
+<p id="result"></p>
+
+<script>
+
+const API_URL =
+"https://script.google.com/macros/s/AKfycbxCjJ6nsM-9DPiCx0p50Pc0ZCEJsZtpIDUwfFmjUQa5Z5a5AcqFxzuBdEKQ_GJQa2R0/exec";
+
+document
+.getElementById("contactForm")
+.addEventListener("submit", async function(e){
+
+  e.preventDefault();
+
+  const data = {
+    name: document.getElementById("name").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    message: document.getElementById("message").value
+  };
+
+  try {
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    document.getElementById("result").innerHTML =
+      "Submitted Successfully";
+
+    document.getElementById("contactForm").reset();
+
+  } catch(err) {
+
+    document.getElementById("result").innerHTML =
+      "Submission Failed";
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>
